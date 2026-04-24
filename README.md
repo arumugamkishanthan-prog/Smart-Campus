@@ -50,7 +50,7 @@ src/main/java/com/smartcampus/
 
 
 
-Explicit, step-by-step instructions on how to build the project and launch the server.
+Step-by-step instructions on how to build the project and launch the server.
 
 1. Clone the repository
 "git clone https://github.com/arumugamkishanthan-prog/smart-campus-api.git"
