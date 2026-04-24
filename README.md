@@ -14,7 +14,101 @@ IIT Number    :  20232541
 Module Leader :  Hamed Hamzeh
 Group         :  CS-19  
  
- 
+
+
+Smart Campus Sensor & Room Management API
+A RESTful API built with JAX-RS (Jersey 2.39.1) and an embedded Grizzly HTTP server for managing campus rooms, sensors, and sensor readings.
+
+
+An overview of my API design.
+
+src/main/java/com/smartcampus/
+├── Main.java                        # Server entry point
+├── SmartCampusApplication.java      # @ApplicationPath config
+├── model/
+│   ├── Room.java
+│   ├── Sensor.java
+│   └── SensorReading.java
+├── repository/
+│   └── DataStore.java               # Singleton in-memory store
+├── resource/
+│   ├── DiscoveryResource.java       # GET /api/v1
+│   ├── RoomResource.java            # GET/POST/DELETE /api/v1/rooms
+│   ├── SensorResource.java          # GET/POST /api/v1/sensors
+│   └── SensorReadingResource.java   # GET/POST /api/v1/sensors/{id}/readings
+├── exception/
+│   ├── RoomNotEmptyException.java
+│   ├── RoomNotEmptyExceptionMapper.java
+│   ├── LinkedResourceNotFoundException.java
+│   ├── LinkedResourceNotFoundExceptionMapper.java
+│   ├── SensorUnavailableException.java
+│   ├── SensorUnavailableExceptionMapper.java
+│   └── GenericExceptionMapper.java
+└── filter/
+    └── LoggingFilter.java
+
+
+
+
+Explicit, step-by-step instructions on how to build the project and launch the server.
+
+1. Clone the repository
+"git clone https://github.com/arumugamkishanthan-prog/smart-campus-api.git"
+
+"cd smart-campus-api"
+
+2. Build the project
+"mvn clean compile"
+
+3. Start the server
+"mvn exec:java"
+
+The server starts at: http://localhost:8080/api/v1/
+
+Press ENTER in the terminal to stop it.
+
+
+
+
+Sample curl commands demonstrating successful interactions with dif
+ferent parts of the API.
+
+1. Get all rooms
+
+curl -X GET http://localhost:8080/api/v1/rooms -H "Accept: application/json"
+
+
+2. Discovery endpoint
+
+curl -X GET http://localhost:8080/api/v1/ -H "Accept: application/json"
+
+
+3. Create a new room
+
+curl -X POST http://localhost:8080/api/v1/rooms \
+  -H "Content-Type: application/json" \
+  -d '{"id":"HALL-001","name":"Main Hall","capacity":200}'
+
+
+4. Get a specific room
+
+curl -X GET http://localhost:8080/api/v1/rooms/LIB-301 -H "Accept: application/json"
+
+
+5. Get all sensors
+
+curl -X GET http://localhost:8080/api/v1/sensors -H "Accept: application/json"
+
+
+6. Get readings for a sensor
+
+curl -X GET http://localhost:8080/api/v1/sensors/TEMP-001/readings -H "Accept: application/json"
+
+
+
+
+
+Questions and answers.
 
 Part 1 — Setup & Discovery
 
@@ -27,9 +121,6 @@ By default, JAX-RS creates a new instance of each resource class for every incom
 Q: Why is HATEOAS considered a hallmark of advanced RESTful design?
 
 HATEOAS (Hypermedia as the Engine of Application State) allows the API to include navigation links directly inside responses. Rather than clients relying on hardcoded or externally documented URLs, they can discover available actions and resources dynamically from the API itself. This reduces coupling between client and server — if a URL changes, only the server needs to be updated. It also makes the API self-describing, which benefits client developers by making the API explorable without consulting static documentation.
-
-
-
 
 
 
